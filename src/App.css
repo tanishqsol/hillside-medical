@@ -86,8 +86,10 @@
 }
 
 .main-content {
-  padding-top: var(--nav-height);
+  padding-top: calc(var(--nav-height) + 20px);
   min-height: calc(100vh - var(--nav-height));
+  width: 100%;
+  position: relative;
 }
 
 /* Navigation Grid Styles */
