@@ -10,6 +10,7 @@ import ScheduleScreen from './screens/ScheduleScreen.jsx';
 // Separate MainContent component to use useLocation hook
 const MainContent = ({ navigationItems }) => {
   const location = useLocation();
+  const [showGuidelines, setShowGuidelines] = useState(false);
   
   const guidelines = {
     notAllowed: [
@@ -71,58 +72,68 @@ const MainContent = ({ navigationItems }) => {
             </Link>
           ))}
         </div>
-        <div className="guidelines-card">
-          <h2>Facility Guidelines</h2>
-          <div className="guidelines-content">
-            <div className="not-allowed">
-              <h3>🚫 Items NOT Allowed (Can Not Have)</h3>
-              <ul>
-                {guidelines.notAllowed.map((item, index) => (
-                  <li key={index}>{item}</li>
-                ))}
-              </ul>
-            </div>
-            <div className="allowed">
-              <h3>✅ Items Allowed (Can Have)</h3>
-              <div className="allowed-section">
-                <h4>Personal Hygiene Items</h4>
+        
+        <div className="guidelines-dropdown">
+          <button 
+            className="guidelines-toggle"
+            onClick={() => setShowGuidelines(!showGuidelines)}
+          >
+            <i className={`fas fa-chevron-${showGuidelines ? 'up' : 'down'}`}></i>
+            Facility Guidelines
+          </button>
+          
+          <div className={`guidelines-card ${showGuidelines ? 'show' : ''}`}>
+            <div className="guidelines-content">
+              <div className="not-allowed">
+                <h3>🚫 Items NOT Allowed (Can Not Have)</h3>
                 <ul>
-                  {guidelines.allowed.hygiene.map((item, index) => (
+                  {guidelines.notAllowed.map((item, index) => (
                     <li key={index}>{item}</li>
                   ))}
                 </ul>
               </div>
-              <div className="allowed-section">
-                <h4>Personal Belongings</h4>
-                <ul>
-                  {guidelines.allowed.personal.map((item, index) => (
-                    <li key={index}>{item}</li>
-                  ))}
-                </ul>
-              </div>
-              <div className="allowed-section">
-                <h4>Entertainment & Leisure</h4>
-                <ul>
-                  {guidelines.allowed.entertainment.map((item, index) => (
-                    <li key={index}>{item}</li>
-                  ))}
-                </ul>
-              </div>
-              <div className="allowed-section">
-                <h4>Other Items</h4>
-                <ul>
-                  {guidelines.allowed.other.map((item, index) => (
-                    <li key={index}>{item}</li>
-                  ))}
-                </ul>
-              </div>
-              <div className="allowed-section">
-                <h4>Restricted Items (Kept Behind Nurse's Station)</h4>
-                <ul>
-                  {guidelines.allowed.restricted.map((item, index) => (
-                    <li key={index}>{item}</li>
-                  ))}
-                </ul>
+              <div className="allowed">
+                <h3>✅ Items Allowed (Can Have)</h3>
+                <div className="allowed-section">
+                  <h4>Personal Hygiene Items</h4>
+                  <ul>
+                    {guidelines.allowed.hygiene.map((item, index) => (
+                      <li key={index}>{item}</li>
+                    ))}
+                  </ul>
+                </div>
+                <div className="allowed-section">
+                  <h4>Personal Belongings</h4>
+                  <ul>
+                    {guidelines.allowed.personal.map((item, index) => (
+                      <li key={index}>{item}</li>
+                    ))}
+                  </ul>
+                </div>
+                <div className="allowed-section">
+                  <h4>Entertainment & Leisure</h4>
+                  <ul>
+                    {guidelines.allowed.entertainment.map((item, index) => (
+                      <li key={index}>{item}</li>
+                    ))}
+                  </ul>
+                </div>
+                <div className="allowed-section">
+                  <h4>Other Items</h4>
+                  <ul>
+                    {guidelines.allowed.other.map((item, index) => (
+                      <li key={index}>{item}</li>
+                    ))}
+                  </ul>
+                </div>
+                <div className="allowed-section">
+                  <h4>Restricted Items (Kept Behind Nurse's Station)</h4>
+                  <ul>
+                    {guidelines.allowed.restricted.map((item, index) => (
+                      <li key={index}>{item}</li>
+                    ))}
+                  </ul>
+                </div>
               </div>
             </div>
           </div>
@@ -140,12 +151,16 @@ const NavbarContent = ({ isDarkMode, setIsDarkMode, isNavOpen, setIsNavOpen, nav
 
   return (
     <>
-      <Link to="/" className="logo-container">
-        <img src={logo} alt="Hillside Medical Logo" className="logo" />
+      <Link to="/" className="logo-container" title="Home">
+        <img src={logo} alt="Logo" className="logo" />
       </Link>
       <div className="mobile-heading">HILLSIDE</div>
       {!isHomePage && (
         <div className={`nav-links ${isNavOpen ? 'active' : ''}`}>
+          <Link to="/" onClick={() => setIsNavOpen(false)} title="Home">
+            <i className="fas fa-home"></i>
+            <span className="nav-text">Home</span>
+          </Link>
           {navigationItems.map(item => (
             <Link 
               key={item.path} 
@@ -191,7 +206,6 @@ function App() {
   }, [isDarkMode]);
 
   const navigationItems = [
-    { path: '/', name: 'Home', icon: 'fa-home' },
     { path: '/team', name: 'Our Team', icon: 'fa-user-md' },
     { path: '/addictions', name: 'Types of Addiction', icon: 'fa-pills' },
     { path: '/menu', name: 'Menu', icon: 'fa-utensils' },

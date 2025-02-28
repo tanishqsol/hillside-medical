@@ -2,10 +2,12 @@
   "name": "medical-facility",
   "private": true,
   "version": "0.0.0",
-  "homepage": ".",
+  "homepage": "https://tanishqsol.github.io/hillside-medical",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d dist",
     "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview"
   },
