@@ -4,24 +4,182 @@ import './App.css';
 import logo from './assets/logo.svg';
 import TeamScreen from './screens/TeamScreen';
 import AddictionsScreen from './screens/AddictionsScreen';
+import MenuScreen from './screens/MenuScreen';
+import ScheduleScreen from './screens/ScheduleScreen.jsx';
 
 // Separate MainContent component to use useLocation hook
 const MainContent = ({ navigationItems }) => {
   const location = useLocation();
   
+  const guidelines = {
+    notAllowed: [
+      "Weapons of any kind",
+      "Drug or Alcohol Paraphernalia (Will be disposed of)",
+      "No CBD or THC products (Will be disposed of)",
+      "Clothing that is provocative, has offensive language, or advertises drugs and alcohol",
+      "Anything containing alcohol, such as mouthwash and hand sanitizer",
+      "Aerosols, including hair spray and room fresheners",
+      "Perfumes/Cologne",
+      "Sharps, including knives, straight blades, and multi-tools",
+      "Glass containers",
+      "Matches and lighters",
+      "Sex toys",
+      "Nail polish/Nail polish remover",
+      "Candles/Incense",
+      "Needles (If medically necessary, they will stay at the nurse's station)"
+    ],
+    allowed: {
+      hygiene: [
+        "Shampoo/Conditioner/Body Wash (No alcohol in first 5 ingredients)",
+        "Makeup",
+        "Floss",
+        "Tweezers",
+        "Q-tips"
+      ],
+      personal: [
+        "Jewelry",
+        "Glasses",
+        "Contacts and solution",
+        "Watches"
+      ],
+      entertainment: [
+        "Art supplies and books",
+        "Electronics (Phones and Laptops)",
+        "Gaming devices (Check with clinical for guidelines)"
+      ],
+      other: [
+        "Vapes (Limit: 2)",
+        "Cigarettes",
+        "Belts/Shoe laces"
+      ],
+      restricted: [
+        "Electric Hair Clippers",
+        "Hair Dryers, Curling Irons, Hair Straighteners",
+        "Nail Clippers"
+      ]
+    }
+  };
+
   if (location.pathname === '/') {
     return (
-      <div className="nav-grid">
-        {navigationItems.map(item => (
-          <Link key={item.path} to={item.path} className="nav-tile">
-            <i className={`fas ${item.icon}`}></i>
-            <span>{item.name}</span>
-          </Link>
-        ))}
-      </div>
+      <>
+        <div className="nav-grid">
+          {navigationItems.map(item => (
+            <Link key={item.path} to={item.path} className="nav-tile">
+              <i className={`fas ${item.icon}`}></i>
+              <span>{item.name}</span>
+            </Link>
+          ))}
+        </div>
+        <div className="guidelines-card">
+          <h2>Facility Guidelines</h2>
+          <div className="guidelines-content">
+            <div className="not-allowed">
+              <h3>🚫 Items NOT Allowed (Can Not Have)</h3>
+              <ul>
+                {guidelines.notAllowed.map((item, index) => (
+                  <li key={index}>{item}</li>
+                ))}
+              </ul>
+            </div>
+            <div className="allowed">
+              <h3>✅ Items Allowed (Can Have)</h3>
+              <div className="allowed-section">
+                <h4>Personal Hygiene Items</h4>
+                <ul>
+                  {guidelines.allowed.hygiene.map((item, index) => (
+                    <li key={index}>{item}</li>
+                  ))}
+                </ul>
+              </div>
+              <div className="allowed-section">
+                <h4>Personal Belongings</h4>
+                <ul>
+                  {guidelines.allowed.personal.map((item, index) => (
+                    <li key={index}>{item}</li>
+                  ))}
+                </ul>
+              </div>
+              <div className="allowed-section">
+                <h4>Entertainment & Leisure</h4>
+                <ul>
+                  {guidelines.allowed.entertainment.map((item, index) => (
+                    <li key={index}>{item}</li>
+                  ))}
+                </ul>
+              </div>
+              <div className="allowed-section">
+                <h4>Other Items</h4>
+                <ul>
+                  {guidelines.allowed.other.map((item, index) => (
+                    <li key={index}>{item}</li>
+                  ))}
+                </ul>
+              </div>
+              <div className="allowed-section">
+                <h4>Restricted Items (Kept Behind Nurse's Station)</h4>
+                <ul>
+                  {guidelines.allowed.restricted.map((item, index) => (
+                    <li key={index}>{item}</li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </>
     );
   }
   return null;
+};
+
+// Create a separate component for the navbar content
+const NavbarContent = ({ isDarkMode, setIsDarkMode, isNavOpen, setIsNavOpen, navigationItems }) => {
+  const location = useLocation();
+  const isHomePage = location.pathname === '/';
+
+  return (
+    <>
+      <Link to="/" className="logo-container">
+        <img src={logo} alt="Hillside Medical Logo" className="logo" />
+      </Link>
+      <div className="mobile-heading">HILLSIDE</div>
+      {!isHomePage && (
+        <div className={`nav-links ${isNavOpen ? 'active' : ''}`}>
+          {navigationItems.map(item => (
+            <Link 
+              key={item.path} 
+              to={item.path} 
+              onClick={() => setIsNavOpen(false)}
+              title={item.name}
+            >
+              <i className={`fas ${item.icon}`}></i>
+              <span className="nav-text">{item.name}</span>
+            </Link>
+          ))}
+        </div>
+      )}
+      <div className="nav-right">
+        <button 
+          className="theme-toggle"
+          onClick={() => setIsDarkMode(!isDarkMode)}
+          aria-label="Toggle theme"
+        >
+          <i className={`fas ${isDarkMode ? 'fa-sun' : 'fa-moon'}`}></i>
+        </button>
+        {!isHomePage && (
+          <button 
+            className="hamburger"
+            onClick={() => setIsNavOpen(!isNavOpen)}
+          >
+            <span></span>
+            <span></span>
+            <span></span>
+          </button>
+        )}
+      </div>
+    </>
+  );
 };
 
 function App() {
@@ -32,7 +190,6 @@ function App() {
     document.documentElement.setAttribute('data-theme', isDarkMode ? 'dark' : 'light');
   }, [isDarkMode]);
 
-  // Full navigation items including Home for both grid and navbar
   const navigationItems = [
     { path: '/', name: 'Home', icon: 'fa-home' },
     { path: '/team', name: 'Our Team', icon: 'fa-user-md' },
@@ -45,47 +202,22 @@ function App() {
     <Router>
       <div className="app">
         <nav className="navbar">
-          <Link to="/" className="logo-container">
-            <img src={logo} alt="Hillside Medical Logo" className="logo" />
-          </Link>
-          <div className="mobile-heading">HILLSIDE</div>
-          <div className={`nav-links ${isNavOpen ? 'active' : ''}`}>
-            {navigationItems.map(item => (
-              <Link key={item.path} to={item.path} onClick={() => setIsNavOpen(false)}>
-                {item.name}
-              </Link>
-            ))}
-          </div>
-          <div className="nav-right">
-            <button 
-              className="theme-toggle"
-              onClick={() => setIsDarkMode(!isDarkMode)}
-              aria-label="Toggle theme"
-            >
-              <i className={`fas ${isDarkMode ? 'fa-sun' : 'fa-moon'}`}></i>
-            </button>
-            <button 
-              className="hamburger"
-              onClick={() => setIsNavOpen(!isNavOpen)}
-            >
-              <span></span>
-              <span></span>
-              <span></span>
-            </button>
-          </div>
-        </nav>
-        {isNavOpen && (
-          <div 
-            className={`sidebar-overlay ${isNavOpen ? 'active' : ''}`}
-            onClick={() => setIsNavOpen(false)}
+          <NavbarContent 
+            isDarkMode={isDarkMode}
+            setIsDarkMode={setIsDarkMode}
+            isNavOpen={isNavOpen}
+            setIsNavOpen={setIsNavOpen}
+            navigationItems={navigationItems}
           />
-        )}
-
+        </nav>
+        <SidebarOverlay isNavOpen={isNavOpen} setIsNavOpen={setIsNavOpen} />
         <main className="main-content">
           <Routes>
             <Route path="/" element={<MainContent navigationItems={navigationItems} />} />
             <Route path="/team" element={<TeamScreen />} />
             <Route path="/addictions" element={<AddictionsScreen />} />
+            <Route path="/menu" element={<MenuScreen />} />
+            <Route path="/schedule" element={<ScheduleScreen />} />
             {/* Add other routes as they're created */}
           </Routes>
         </main>
@@ -93,5 +225,20 @@ function App() {
     </Router>
   );
 }
+
+// Separate component for the sidebar overlay
+const SidebarOverlay = ({ isNavOpen, setIsNavOpen }) => {
+  const location = useLocation();
+  const isHomePage = location.pathname === '/';
+
+  if (isHomePage || !isNavOpen) return null;
+
+  return (
+    <div 
+      className={`sidebar-overlay ${isNavOpen ? 'active' : ''}`}
+      onClick={() => setIsNavOpen(false)}
+    />
+  );
+};
 
 export default App; 

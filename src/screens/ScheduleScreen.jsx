@@ -1,0 +1,90 @@
+import React from 'react';
+import './ScheduleScreen.css';
+
+const ScheduleScreen = () => {
+  const dailyRoutine = [
+    { time: "7:00 AM", activity: "ADLs (Activities of Daily Living)" },
+    { time: "8:30 AM", activity: "Breakfast" },
+    { time: "", activity: "Fresh Air Break" },
+    { time: "10:00 AM", activity: "Morning Group" },
+    { time: "11:00 AM", activity: "Recreation Time" },
+    { time: "", activity: "Fresh Air Break" },
+    { time: "12:30 PM", activity: "Lunch" },
+    { time: "1:30 PM", activity: "Group Time" },
+    { time: "", activity: "Fresh Air Break" },
+    { time: "3:30 PM", activity: "Group Time" },
+    { time: "", activity: "Fresh Air Break" },
+    { time: "6:00 PM", activity: "Dinner" },
+    { time: "", activity: "Fresh Air Break & Self-Care" },
+    { time: "7:00 PM", activity: "Group Time" },
+    { time: "", activity: "Fresh Air Break" },
+    { time: "8:30 PM", activity: "Recreation Time / Movies" },
+    { time: "", activity: "Fresh Air Break" },
+    { time: "11:00 PM", activity: "Lights Out" }
+  ];
+
+  const medicationTimes = [
+    { time: "8:00 AM" },
+    { time: "12:00 PM" },
+    { time: "4:00 PM" },
+    { time: "8:00 PM" }
+  ];
+
+  const todaySchedule = [
+    { time: "10:00 AM", activity: "Morning Meditation / Goals", staff: "AR" },
+    { time: "1:30 PM", activity: "Self-Care", staff: "LD" },
+    { time: "3:30 PM", activity: "Neuroscience of Addiction", staff: "SA" },
+    { time: "7:00 PM", activity: "Wrap-Up Group", staff: "KW" }
+  ];
+
+  return (
+    <div className="schedule-screen">
+      <div className="schedule-grid">
+        {/* Daily Routine Card */}
+        <div className="schedule-card">
+          <h2>ATS Program Schedule (Daily Routine)</h2>
+          <div className="schedule-list">
+            {dailyRoutine.map((item, index) => (
+              <div key={index} className="schedule-item">
+                {item.time && <span className="time">{item.time}</span>}
+                <span className={`activity ${!item.time ? 'break' : ''}`}>
+                  {item.activity}
+                </span>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Medication Times Card */}
+        <div className="schedule-card med-times">
+          <h2>ATS Medication Times</h2>
+          <div className="med-list">
+            {medicationTimes.map((item, index) => (
+              <div key={index} className="med-time">
+                <i className="fas fa-pills"></i>
+                <span>{item.time}</span>
+              </div>
+            ))}
+          </div>
+          <p className="med-note">(Medication times can be flexible +/- 1 hour)</p>
+        </div>
+
+        {/* Today's Schedule Card */}
+        <div className="schedule-card today">
+          <h2>ATS Daily Schedule – Friday, February 28</h2>
+          <div className="today-list">
+            {todaySchedule.map((item, index) => (
+              <div key={index} className="today-item">
+                <span className="time">{item.time}</span>
+                <span className="activity">{item.activity}</span>
+                <span className="staff">({item.staff})</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default ScheduleScreen; 
