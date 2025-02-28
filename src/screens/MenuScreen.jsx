@@ -66,72 +66,40 @@ const MenuScreen = () => {
     ]
   };
 
-  // Updated isToday function with safer date parsing
-  const isToday = (dayString) => {
-    try {
-      // Extract the date from strings like "Sunday (2/23)"
-      const match = dayString.match(/\((\d+)\/(\d+)\)/);
-      if (!match) return false;
-      
-      const [, month, day] = match;
-      const today = new Date();
-      const menuDate = new Date(2025, parseInt(month) - 1, parseInt(day));
-      
-      return today.getDate() === menuDate.getDate() && 
-             today.getMonth() === menuDate.getMonth();
-      // Removed year comparison since we're showing a future menu
-    } catch (error) {
-      console.error('Error parsing date:', error);
-      return false;
-    }
-  };
-
-  // If no day matches today, show the first day
-  const displayedDays = showFullWeek 
-    ? weeklyMenu.days 
-    : weeklyMenu.days.filter(day => isToday(day.day)).length > 0
-      ? weeklyMenu.days.filter(day => isToday(day.day))
-      : [weeklyMenu.days[0]];
+  const displayedDays = showFullWeek ? weeklyMenu.days : weeklyMenu.days.slice(0, 3);
+  const isToday = (day) => day.includes("(2/23)"); // Example logic
 
   return (
     <div className="menu-screen">
-      <div className="menu-header">
-        <h1>{weeklyMenu.title}</h1>
-        <button 
-          className="toggle-view-btn"
-          onClick={() => setShowFullWeek(!showFullWeek)}
-        >
-          {showFullWeek ? 'Show Today\'s Menu' : 'Show Full Week'}
-        </button>
+      <h1>{weeklyMenu.title}</h1>
+      <div className="menu-cards">
+        {displayedDays.map((day, index) => (
+          <div key={index} className={`menu-card ${isToday(day.day) ? 'today' : ''}`}>
+            <div className="menu-card-header">
+              <h2>{day.day}</h2>
+              {isToday(day.day) && <span className="today-badge">Today</span>}
+            </div>
+            <div className="meal-section">
+              <h3><i className="fas fa-sun"></i> Breakfast</h3>
+              <p>{day.meals.breakfast}</p>
+            </div>
+            <div className="meal-section">
+              <h3><i className="fas fa-cloud-sun"></i> Lunch</h3>
+              <p>{day.meals.lunch}</p>
+            </div>
+            <div className="meal-section">
+              <h3><i className="fas fa-moon"></i> Dinner</h3>
+              <p>{day.meals.dinner}</p>
+            </div>
+          </div>
+        ))}
       </div>
-      <div className="table-container">
-        <table className="menu-table">
-          <thead>
-            <tr>
-              <th>Day</th>
-              <th>Breakfast</th>
-              <th>Lunch</th>
-              <th>Dinner</th>
-            </tr>
-          </thead>
-          <tbody>
-            {displayedDays.map((day, index) => (
-              <tr 
-                key={index} 
-                className={isToday(day.day) ? 'today' : ''}
-              >
-                <td className="day-cell">
-                  {day.day}
-                  {isToday(day.day) && <span className="today-badge">Today</span>}
-                </td>
-                <td>{day.meals.breakfast}</td>
-                <td>{day.meals.lunch}</td>
-                <td>{day.meals.dinner}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
+      <button 
+        className="toggle-view-btn"
+        onClick={() => setShowFullWeek(!showFullWeek)}
+      >
+        {showFullWeek ? 'Show Less' : 'View Full Week'}
+      </button>
     </div>
   );
 };

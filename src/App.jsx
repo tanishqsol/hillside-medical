@@ -6,6 +6,7 @@ import TeamScreen from './screens/TeamScreen';
 import AddictionsScreen from './screens/AddictionsScreen';
 import MenuScreen from './screens/MenuScreen';
 import ScheduleScreen from './screens/ScheduleScreen.jsx';
+import ATSInfo from './components/ATSInfo';
 
 // Separate MainContent component to use useLocation hook
 const MainContent = ({ navigationItems }) => {
@@ -72,6 +73,8 @@ const MainContent = ({ navigationItems }) => {
             </Link>
           ))}
         </div>
+        
+        <ATSInfo />
         
         <div className="guidelines-dropdown">
           <button 
