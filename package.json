@@ -2,7 +2,7 @@
   "name": "medical-facility",
   "private": true,
   "version": "0.0.0",
-  "homepage": "https://tanishqsol.github.io/hillside-medical",
+  "homepage": "https://tanishqsol.github.io/hillside-medical/",
   "scripts": {
     "dev": "vite",
     "build": "vite build",

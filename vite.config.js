@@ -6,6 +6,12 @@ export default defineConfig({
   plugins: [react()],
   base: '/hillside-medical/',
   build: {
-    outDir: 'docs'
+    outDir: 'docs',
+    assetsDir: 'assets',
+    rollupOptions: {
+      output: {
+        assetFileNames: 'assets/[name].[ext]'
+      }
+    }
   }
 })
