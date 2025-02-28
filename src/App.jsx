@@ -1,8 +1,27 @@
 import React, { useState, useEffect } from 'react';
-import { BrowserRouter as Router, Routes, Route, Link, useLocation } from 'react-router-dom';
+import { HashRouter as Router, Routes, Route, Link, useLocation } from 'react-router-dom';
 import './App.css';
 import logo from './assets/logo.svg';
 import TeamScreen from './screens/TeamScreen';
+
+// Separate MainContent component to use useLocation hook
+const MainContent = ({ navigationItems }) => {
+  const location = useLocation();
+  
+  if (location.pathname === '/') {
+    return (
+      <div className="nav-grid">
+        {navigationItems.map(item => (
+          <Link key={item.path} to={item.path} className="nav-tile">
+            <i className={`fas ${item.icon}`}></i>
+            <span>{item.name}</span>
+          </Link>
+        ))}
+      </div>
+    );
+  }
+  return null;
+};
 
 function App() {
   const [isNavOpen, setIsNavOpen] = useState(false);
@@ -19,27 +38,8 @@ function App() {
     { path: '/schedule', name: 'Schedule', icon: 'fa-calendar' },
   ];
 
-  // MainContent component to conditionally render navigation grid
-  const MainContent = () => {
-    const location = useLocation();
-    
-    if (location.pathname === '/') {
-      return (
-        <div className="nav-grid">
-          {navigationItems.map(item => (
-            <Link key={item.path} to={item.path} className="nav-tile">
-              <i className={`fas ${item.icon}`}></i>
-              <span>{item.name}</span>
-            </Link>
-          ))}
-        </div>
-      );
-    }
-    return null;
-  };
-
   return (
-    <Router basename="/hillside">
+    <Router>
       <div className="app">
         <nav className="navbar">
           <Link to="/" className="logo-container">
@@ -73,7 +73,7 @@ function App() {
 
         <main className="main-content">
           <Routes>
-            <Route path="/" element={<MainContent />} />
+            <Route path="/" element={<MainContent navigationItems={navigationItems} />} />
             <Route path="/team" element={<TeamScreen />} />
             {/* Add other routes as they're created */}
           </Routes>
