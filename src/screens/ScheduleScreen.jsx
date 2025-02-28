@@ -1,7 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './ScheduleScreen.css';
 
 const ScheduleScreen = () => {
+  const [showDailyRoutine, setShowDailyRoutine] = useState(false);
+  const [showTodaySchedule, setShowTodaySchedule] = useState(false);
+
   const dailyRoutine = [
     { time: "7:00 AM", activity: "ADLs (Activities of Daily Living)" },
     { time: "8:30 AM", activity: "Breakfast" },
@@ -40,18 +43,27 @@ const ScheduleScreen = () => {
   return (
     <div className="schedule-screen">
       <div className="schedule-grid">
-        {/* Daily Routine Card */}
+        {/* Daily Routine Dropdown */}
         <div className="schedule-card">
-          <h2>ATS Program Schedule (Daily Routine)</h2>
-          <div className="schedule-list">
-            {dailyRoutine.map((item, index) => (
-              <div key={index} className="schedule-item">
-                {item.time && <span className="time">{item.time}</span>}
-                <span className={`activity ${!item.time ? 'break' : ''}`}>
-                  {item.activity}
-                </span>
-              </div>
-            ))}
+          <button 
+            className="schedule-toggle"
+            onClick={() => setShowDailyRoutine(!showDailyRoutine)}
+          >
+            <span>ATS Program Schedule (Daily Routine)</span>
+            <i className={`fas fa-chevron-${showDailyRoutine ? 'up' : 'down'}`}></i>
+          </button>
+          
+          <div className={`schedule-content ${showDailyRoutine ? 'show' : ''}`}>
+            <div className="schedule-list">
+              {dailyRoutine.map((item, index) => (
+                <div key={index} className="schedule-item">
+                  <span className="time">{item.time}</span>
+                  <span className={`activity ${!item.time ? 'break' : ''}`}>
+                    {item.activity}
+                  </span>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
 
@@ -69,17 +81,26 @@ const ScheduleScreen = () => {
           <p className="med-note">(Medication times can be flexible +/- 1 hour)</p>
         </div>
 
-        {/* Today's Schedule Card */}
-        <div className="schedule-card today">
-          <h2>ATS Daily Schedule – Friday, February 28</h2>
-          <div className="today-list">
-            {todaySchedule.map((item, index) => (
-              <div key={index} className="today-item">
-                <span className="time">{item.time}</span>
-                <span className="activity">{item.activity}</span>
-                <span className="staff">({item.staff})</span>
-              </div>
-            ))}
+        {/* Today's Schedule Dropdown */}
+        <div className="schedule-card">
+          <button 
+            className="schedule-toggle"
+            onClick={() => setShowTodaySchedule(!showTodaySchedule)}
+          >
+            <span>ATS Daily Schedule – Friday, February 28</span>
+            <i className={`fas fa-chevron-${showTodaySchedule ? 'up' : 'down'}`}></i>
+          </button>
+          
+          <div className={`schedule-content ${showTodaySchedule ? 'show' : ''}`}>
+            <div className="today-list">
+              {todaySchedule.map((item, index) => (
+                <div key={index} className="today-item">
+                  <span className="time">{item.time}</span>
+                  <span className="activity">{item.activity}</span>
+                  <span className="staff">({item.staff})</span>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </div>
