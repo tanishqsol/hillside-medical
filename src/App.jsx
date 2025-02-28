@@ -3,6 +3,7 @@ import { HashRouter as Router, Routes, Route, Link, useLocation } from 'react-ro
 import './App.css';
 import logo from './assets/logo.svg';
 import TeamScreen from './screens/TeamScreen';
+import AddictionsScreen from './screens/AddictionsScreen';
 
 // Separate MainContent component to use useLocation hook
 const MainContent = ({ navigationItems }) => {
@@ -31,12 +32,17 @@ function App() {
     document.documentElement.setAttribute('data-theme', isDarkMode ? 'dark' : 'light');
   }, [isDarkMode]);
 
+  // Full navigation items including Home for the grid
   const navigationItems = [
     { path: '/', name: 'Home', icon: 'fa-home' },
     { path: '/team', name: 'Our Team', icon: 'fa-user-md' },
+    { path: '/addictions', name: 'Types of Addiction', icon: 'fa-pills' },
     { path: '/menu', name: 'Menu', icon: 'fa-utensils' },
     { path: '/schedule', name: 'Schedule', icon: 'fa-calendar' },
   ];
+
+  // Navbar items excluding Home
+  const navbarItems = navigationItems.filter(item => item.path !== '/');
 
   return (
     <Router>
@@ -46,7 +52,7 @@ function App() {
             <img src={logo} alt="Hillside Medical Logo" className="logo" />
           </Link>
           <div className={`nav-links ${isNavOpen ? 'active' : ''}`}>
-            {navigationItems.map(item => (
+            {navbarItems.map(item => (
               <Link key={item.path} to={item.path} onClick={() => setIsNavOpen(false)}>
                 {item.name}
               </Link>
@@ -75,6 +81,7 @@ function App() {
           <Routes>
             <Route path="/" element={<MainContent navigationItems={navigationItems} />} />
             <Route path="/team" element={<TeamScreen />} />
+            <Route path="/addictions" element={<AddictionsScreen />} />
             {/* Add other routes as they're created */}
           </Routes>
         </main>
