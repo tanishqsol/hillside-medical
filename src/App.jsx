@@ -51,6 +51,7 @@ function App() {
           <Link to="/" className="logo-container">
             <img src={logo} alt="Hillside Medical Logo" className="logo" />
           </Link>
+          <div className="mobile-heading">HILLSIDE</div>
           <div className={`nav-links ${isNavOpen ? 'active' : ''}`}>
             {navbarItems.map(item => (
               <Link key={item.path} to={item.path} onClick={() => setIsNavOpen(false)}>
@@ -76,6 +77,12 @@ function App() {
             </button>
           </div>
         </nav>
+        {isNavOpen && (
+          <div 
+            className={`sidebar-overlay ${isNavOpen ? 'active' : ''}`}
+            onClick={() => setIsNavOpen(false)}
+          />
+        )}
 
         <main className="main-content">
           <Routes>
