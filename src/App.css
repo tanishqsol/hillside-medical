@@ -1,0 +1,242 @@
+:root {
+  --primary-color: #007AFF;
+  --text-color: #fff;
+  --background-color: #000;
+  --nav-height: 60px;
+  --card-bg: #111;
+}
+
+:root[data-theme="light"] {
+  --text-color: #333;
+  --background-color: #fff;
+  --card-bg: #fff;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.app {
+  min-height: 100vh;
+  background-color: var(--background-color);
+}
+
+.navbar {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  height: var(--nav-height);
+  background-color: var(--card-bg);
+  padding: 0 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  z-index: 1000;
+}
+
+.logo-container {
+  height: var(--nav-height);
+  padding: 10px;
+  display: flex;
+  align-items: center;
+}
+
+.logo {
+  height: 100%;
+  max-height: 40px;
+  width: auto;
+}
+
+.nav-links {
+  display: flex;
+  gap: 20px;
+}
+
+.nav-links a {
+  text-decoration: none;
+  color: var(--text-color);
+  font-weight: 500;
+  transition: color 0.3s ease;
+  cursor: pointer;
+}
+
+.nav-links a:hover {
+  color: var(--primary-color);
+}
+
+.hamburger {
+  display: none;
+  flex-direction: column;
+  gap: 6px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 5px;
+}
+
+.hamburger span {
+  display: block;
+  width: 25px;
+  height: 2px;
+  background-color: var(--text-color);
+  transition: all 0.3s ease;
+}
+
+.main-content {
+  padding-top: var(--nav-height);
+  min-height: calc(100vh - var(--nav-height));
+}
+
+/* Navigation Grid Styles */
+.nav-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
+  padding: 65px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.nav-tile {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 20px;
+  background-color: var(--card-bg);
+  border-radius: 10px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+  text-decoration: none;
+  color: var(--text-color);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  cursor: pointer;
+}
+
+.nav-tile:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4);
+}
+
+.nav-tile i {
+  font-size: 2.5rem;
+  color: var(--primary-color);
+  margin-bottom: 15px;
+}
+
+.nav-tile span {
+  font-size: 1.2rem;
+  font-weight: 500;
+}
+
+.nav-right {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.theme-toggle {
+  background: none;
+  border: none;
+  color: var(--text-color);
+  font-size: 1.2rem;
+  cursor: pointer;
+  padding: 8px;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.3s ease;
+}
+
+.theme-toggle:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+/* Mobile Responsive Design */
+@media (max-width: 768px) {
+  .navbar {
+    justify-content: flex-start;
+  }
+
+  .logo-container {
+    order: 1;
+    margin-right: auto;
+  }
+  
+  .hamburger {
+    order: 3;
+  }
+  
+  .nav-links {
+    order: 2;
+  }
+
+  .hamburger {
+    display: flex;
+  }
+
+  .nav-links {
+    position: fixed;
+    top: var(--nav-height);
+    left: 0;
+    right: 0;
+    background-color: var(--background-color);
+    flex-direction: column;
+    padding: 20px;
+    transform: translateY(-150%);
+    transition: transform 0.3s ease;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+
+  .nav-links.active {
+    transform: translateY(0);
+    margin-top: 10px;
+  }
+
+  .nav-links a {
+    padding: 10px 0;
+    width: 100%;
+    text-align: center;
+  }
+
+  .main-content {
+    padding-top: calc(var(--nav-height) + 20px);
+  }
+
+  .nav-grid {
+    grid-template-columns: 1fr;
+    padding: 20px;
+    gap: 15px;
+  }
+
+  .nav-tile {
+    flex-direction: row;
+    padding: 20px;
+    justify-content: flex-start;
+    gap: 20px;
+  }
+
+  .nav-tile i {
+    margin-bottom: 0;
+    font-size: 2rem;
+  }
+
+  .nav-tile span {
+    font-size: 1rem;
+  }
+
+  .nav-right {
+    order: 3;
+  }
+
+  .theme-toggle {
+    font-size: 1rem;
+    width: 35px;
+    height: 35px;
+  }
+} 
