@@ -32,7 +32,7 @@ function App() {
     document.documentElement.setAttribute('data-theme', isDarkMode ? 'dark' : 'light');
   }, [isDarkMode]);
 
-  // Full navigation items including Home for the grid
+  // Full navigation items including Home for both grid and navbar
   const navigationItems = [
     { path: '/', name: 'Home', icon: 'fa-home' },
     { path: '/team', name: 'Our Team', icon: 'fa-user-md' },
@@ -40,9 +40,6 @@ function App() {
     { path: '/menu', name: 'Menu', icon: 'fa-utensils' },
     { path: '/schedule', name: 'Schedule', icon: 'fa-calendar' },
   ];
-
-  // Navbar items excluding Home
-  const navbarItems = navigationItems.filter(item => item.path !== '/');
 
   return (
     <Router>
@@ -53,7 +50,7 @@ function App() {
           </Link>
           <div className="mobile-heading">HILLSIDE</div>
           <div className={`nav-links ${isNavOpen ? 'active' : ''}`}>
-            {navbarItems.map(item => (
+            {navigationItems.map(item => (
               <Link key={item.path} to={item.path} onClick={() => setIsNavOpen(false)}>
                 {item.name}
               </Link>
