@@ -1,15 +1,21 @@
 :root {
-  --primary-color: #007AFF;
+  --primary-color: #B8860B; /* Dark Golden Rod */
   --text-color: #fff;
   --background-color: #000;
   --nav-height: 60px;
   --card-bg: #111;
+  --hover-color: #DAA520; /* Golden Rod */
+  --border-color: rgba(184, 134, 11, 0.2); /* Transparent dark gold */
+  --accent-color: #CFB53B; /* Old Gold */
+  --highlight-color: rgba(184, 134, 11, 0.1); /* For backgrounds */
 }
 
 :root[data-theme="light"] {
-  --text-color: #333;
+  --text-color: #000;
   --background-color: #fff;
   --card-bg: #fff;
+  --border-color: rgba(184, 134, 11, 0.3);
+  --highlight-color: rgba(184, 134, 11, 0.05);
 }
 
 * {

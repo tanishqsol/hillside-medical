@@ -15,7 +15,9 @@
   background-color: var(--card-bg);
   border-radius: 10px;
   padding: 30px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 2px 10px rgba(255, 215, 0, 0.1);
+  border: 1px solid var(--border-color);
+  animation: fadeIn 0.5s ease-out;
 }
 
 .schedule-card h2 {
@@ -37,7 +39,7 @@
   align-items: center;
   gap: 20px;
   padding: 10px 0;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  border-bottom: 1px solid var(--border-color);
 }
 
 .schedule-item:last-child {
@@ -78,11 +80,22 @@
   flex-direction: column;
   align-items: center;
   gap: 10px;
+  padding: 15px;
+  border-radius: 50%;
+  border: 2px solid var(--border-color);
+  transition: all 0.3s ease;
+  animation: goldPulse 2s infinite;
+}
+
+.med-time:hover {
+  border-color: var(--primary-color);
+  transform: translateY(-2px);
 }
 
 .med-time i {
   font-size: 2rem;
   color: var(--primary-color);
+  transition: all 0.3s ease;
 }
 
 .med-note {
@@ -103,8 +116,9 @@
   align-items: center;
   gap: 20px;
   padding: 15px;
-  background-color: rgba(0, 122, 255, 0.1);
+  background-color: var(--highlight-color);
   border-radius: 8px;
+  border: 1px solid var(--border-color);
 }
 
 .today-item .time {
@@ -113,6 +127,40 @@
 
 .today-item .staff {
   color: var(--primary-color);
+}
+
+/* Add hover effects */
+.today-item:hover {
+  background-color: rgba(184, 134, 11, 0.15);
+}
+
+.med-time:hover i {
+  color: var(--hover-color);
+  transform: scale(1.1);
+  transition: all 0.3s ease;
+}
+
+@keyframes goldPulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(184, 134, 11, 0.4);
+  }
+  70% {
+    box-shadow: 0 0 0 10px rgba(184, 134, 11, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(184, 134, 11, 0);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 @media (max-width: 768px) {
@@ -143,4 +191,13 @@
     align-items: flex-start;
     gap: 5px;
   }
+}
+
+/* Update other color references */
+.hamburger::after {
+  background: var(--primary-color);
+}
+
+.nav-tile:hover {
+  box-shadow: 0 5px 15px rgba(184, 134, 11, 0.2);
 } 
