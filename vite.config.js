@@ -12,7 +12,7 @@ export default defineConfig({
       }
     })
   ],
-  base: './',
+  base: '/hillside-medical/',
   server: {
     port: 3000
   }
