@@ -1,8 +1,12 @@
 import React, { useState } from 'react';
 import './TeamScreen.css';
+import { useStaff } from '../context/StaffContext';
+import { usePatients } from '../context/PatientContext';
 
 const TeamScreen = () => {
   const [selectedMember, setSelectedMember] = useState(null);
+  const { staffList } = useStaff();
+  const { patients } = usePatients();
 
   const hillsideTeam = {
     clinicalStaff: [
@@ -31,31 +35,6 @@ const TeamScreen = () => {
     ]
   };
 
-  const patients = [
-    { room: "201a", name: "-", clinician: "-", caseManager: "-", careCoordinator: "-" },
-    { room: "201b", name: "Michael C", clinician: "-", caseManager: "-", careCoordinator: "-" },
-    { room: "202a", name: "Thomas M", clinician: "-", caseManager: "-", careCoordinator: "-" },
-    { room: "202b", name: "Charles R", clinician: "-", caseManager: "-", careCoordinator: "-" },
-    { room: "203a", name: "-", clinician: "-", caseManager: "-", careCoordinator: "-" },
-    { room: "203b", name: "David D", clinician: "Mark K", caseManager: "Winsome", careCoordinator: "James" },
-    { room: "204a", name: "Tanishq", clinician: "Curtis", caseManager: "Sam", careCoordinator: "Zeina" },
-    { room: "204b", name: "Michael O", clinician: "Sean", caseManager: "Winsome", careCoordinator: "-" },
-    { room: "205a", name: "Jake T", clinician: "Dev", caseManager: "Liz", careCoordinator: "-" },
-    { room: "205b", name: "Michael E", clinician: "Lily", caseManager: "Sam", careCoordinator: "-" },
-    { room: "206a", name: '"Madi" D', clinician: "Dev", caseManager: "Marissa", careCoordinator: "Zeina" },
-    { room: "206b", name: "John P", clinician: "Rachael", caseManager: "Seth", careCoordinator: "-" },
-    { room: "207a", name: "Eden F", clinician: "Rachael", caseManager: "-", careCoordinator: "-" },
-    { room: "207b", name: "Jacki", clinician: "Josh", caseManager: "Stephen", careCoordinator: "James" },
-    { room: "208a", name: "-", clinician: "-", caseManager: "-", careCoordinator: "-" },
-    { room: "208b", name: "Tom P", clinician: "-", caseManager: "-", careCoordinator: "-" },
-    { room: "209a", name: "Dean M", clinician: "Mark", caseManager: "Stephen", careCoordinator: "-" },
-    { room: "209b", name: "Jeremy G", clinician: "Sean", caseManager: "Sam", careCoordinator: "-" },
-    { room: "210a", name: "(Red Text, Unclear)", clinician: "-", caseManager: "-", careCoordinator: "-", isHighlight: true },
-    { room: "210b", name: "Rickey", clinician: "Mark", caseManager: "Stephen", careCoordinator: "-" },
-    { room: "211a", name: "Shawn M", clinician: "-", caseManager: "-", careCoordinator: "-" },
-    { room: "211b", name: "Jacob J", clinician: "-", caseManager: "Liz", careCoordinator: "-" }
-  ];
-
   return (
     <div className="team-screen">
       <div className="team-grid">
@@ -65,16 +44,16 @@ const TeamScreen = () => {
           <div className="staff-section">
             <h3>Clinical Staff</h3>
             <div className="staff-list">
-              {hillsideTeam.clinicalStaff.map((member, index) => (
+              {staffList.clinical.map((staff, index) => (
                 <div 
                   key={index} 
                   className="staff-member"
-                  onClick={() => setSelectedMember(member)}
+                  onClick={() => setSelectedMember(staff)}
                 >
                   <div className="staff-avatar">
-                    <i className={`fas fa-${member.gender}`}></i>
+                    <i className="fas fa-user-md"></i>
                   </div>
-                  <span className="staff-name">{member.name}</span>
+                  <span className="staff-name">{staff}</span>
                 </div>
               ))}
             </div>
@@ -82,16 +61,16 @@ const TeamScreen = () => {
           <div className="staff-section">
             <h3>Nursing Staff</h3>
             <div className="staff-list">
-              {hillsideTeam.nursingStaff.map((member, index) => (
+              {staffList.nursing.map((staff, index) => (
                 <div 
                   key={index} 
                   className="staff-member"
-                  onClick={() => setSelectedMember(member)}
+                  onClick={() => setSelectedMember(staff)}
                 >
                   <div className="staff-avatar">
-                    <i className={`fas fa-${member.gender}`}></i>
+                    <i className="fas fa-user-nurse"></i>
                   </div>
-                  <span className="staff-name">{member.name}</span>
+                  <span className="staff-name">{staff}</span>
                 </div>
               ))}
             </div>
@@ -99,17 +78,17 @@ const TeamScreen = () => {
           <div className="staff-section">
             <h3>RS Staff on Duty</h3>
             <div className="staff-list">
-              {hillsideTeam.rsStaff.map((member, index) => (
+              {staffList.rs.map((staff, index) => (
                 <div 
                   key={index} 
                   className="staff-member"
-                  onClick={() => setSelectedMember(member)}
+                  onClick={() => setSelectedMember(staff)}
                 >
                   <div className="staff-avatar">
-                    <i className={`fas fa-${member.gender}`}></i>
+                    <i className="fas fa-user"></i>
                   </div>
                   <span className="staff-name">
-                    {member.position}: {member.name}
+                    {staff}
                   </span>
                 </div>
               ))}
@@ -160,7 +139,7 @@ const TeamScreen = () => {
             <div className="modal-avatar">
               <i className={`fas fa-${selectedMember.gender}`}></i>
             </div>
-            <h2>{selectedMember.name}</h2>
+            <h2>{selectedMember}</h2>
             <p className="modal-role">
               {selectedMember.position ? 
                 `Role: ${selectedMember.position}` : 

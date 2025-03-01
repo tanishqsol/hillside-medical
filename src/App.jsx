@@ -7,6 +7,11 @@ import AddictionsScreen from './screens/AddictionsScreen';
 import MenuScreen from './screens/MenuScreen';
 import ScheduleScreen from './screens/ScheduleScreen.jsx';
 import ATSInfo from './components/ATSInfo';
+import AdminLoginScreen from './screens/AdminLoginScreen';
+import AdminDashboard from './screens/AdminDashboard';
+import { StaffProvider } from './context/StaffContext';
+import { PatientProvider } from './context/PatientContext';
+import { ATSProvider } from './context/ATSContext';
 
 // Separate MainContent component to use useLocation hook
 const MainContent = ({ navigationItems }) => {
@@ -72,6 +77,13 @@ const MainContent = ({ navigationItems }) => {
               <span>{item.name}</span>
             </Link>
           ))}
+          <Link to="/admin" className="nav-tile admin-tile">
+            <div className="admin-icons">
+              <i className="fas fa-shield-halved"></i>
+              <i className="fas fa-lock"></i>
+            </div>
+            <span>Admin</span>
+          </Link>
         </div>
         
         <ATSInfo />
@@ -175,6 +187,10 @@ const NavbarContent = ({ isDarkMode, setIsDarkMode, isNavOpen, setIsNavOpen, nav
               <span className="nav-text">{item.name}</span>
             </Link>
           ))}
+          <Link to="/admin" className="admin-link" title="Admin">
+            <i className="fas fa-shield-halved"></i>
+            <span className="nav-text">Admin</span>
+          </Link>
         </div>
       )}
       <div className="nav-right">
@@ -203,43 +219,57 @@ const NavbarContent = ({ isDarkMode, setIsDarkMode, isNavOpen, setIsNavOpen, nav
 function App() {
   const [isNavOpen, setIsNavOpen] = useState(false);
   const [isDarkMode, setIsDarkMode] = useState(true);
+  const [isAdminLoggedIn, setIsAdminLoggedIn] = useState(false);
 
   useEffect(() => {
     document.documentElement.setAttribute('data-theme', isDarkMode ? 'dark' : 'light');
   }, [isDarkMode]);
 
   const navigationItems = [
-    { path: '/team', name: 'Our Team', icon: 'fa-user-md' },
-    { path: '/addictions', name: 'Types of Addiction', icon: 'fa-pills' },
+    { path: '/team', name: 'Our Team', icon: 'fa-user-doctor' },
+    { path: '/addictions', name: 'Types of Addiction', icon: 'fa-capsules' },
     { path: '/menu', name: 'Menu', icon: 'fa-utensils' },
-    { path: '/schedule', name: 'Schedule', icon: 'fa-calendar' },
+    { path: '/schedule', name: 'Schedule', icon: 'fa-calendar-days' },
   ];
 
   return (
-    <Router>
-      <div className="app">
-        <nav className="navbar">
-          <NavbarContent 
-            isDarkMode={isDarkMode}
-            setIsDarkMode={setIsDarkMode}
-            isNavOpen={isNavOpen}
-            setIsNavOpen={setIsNavOpen}
-            navigationItems={navigationItems}
-          />
-        </nav>
-        <SidebarOverlay isNavOpen={isNavOpen} setIsNavOpen={setIsNavOpen} />
-        <main className="main-content">
-          <Routes>
-            <Route path="/" element={<MainContent navigationItems={navigationItems} />} />
-            <Route path="/team" element={<TeamScreen />} />
-            <Route path="/addictions" element={<AddictionsScreen />} />
-            <Route path="/menu" element={<MenuScreen />} />
-            <Route path="/schedule" element={<ScheduleScreen />} />
-            {/* Add other routes as they're created */}
-          </Routes>
-        </main>
-      </div>
-    </Router>
+    <StaffProvider>
+      <PatientProvider>
+        <ATSProvider>
+          <Router>
+            <div className="app">
+              <nav className="navbar">
+                <NavbarContent 
+                  isDarkMode={isDarkMode}
+                  setIsDarkMode={setIsDarkMode}
+                  isNavOpen={isNavOpen}
+                  setIsNavOpen={setIsNavOpen}
+                  navigationItems={navigationItems}
+                />
+              </nav>
+              <SidebarOverlay isNavOpen={isNavOpen} setIsNavOpen={setIsNavOpen} />
+              <main className="main-content">
+                <Routes>
+                  <Route path="/" element={<MainContent navigationItems={navigationItems} />} />
+                  <Route path="/team" element={<TeamScreen />} />
+                  <Route path="/addictions" element={<AddictionsScreen />} />
+                  <Route path="/menu" element={<MenuScreen />} />
+                  <Route path="/schedule" element={<ScheduleScreen />} />
+                  <Route 
+                    path="/admin" 
+                    element={
+                      isAdminLoggedIn ? 
+                      <AdminDashboard /> : 
+                      <AdminLoginScreen onLogin={setIsAdminLoggedIn} />
+                    } 
+                  />
+                </Routes>
+              </main>
+            </div>
+          </Router>
+        </ATSProvider>
+      </PatientProvider>
+    </StaffProvider>
   );
 }
 

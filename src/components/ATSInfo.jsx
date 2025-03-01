@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import './ATSInfo.css';
+import { useATS } from '../context/ATSContext';
 
 const ATSInfo = () => {
   const [showDetails, setShowDetails] = useState(false);
   const [showCSSDetails, setShowCSSDetails] = useState(false);
+  const { schedule } = useATS();
 
   return (
     <div className="ats-info-container">
