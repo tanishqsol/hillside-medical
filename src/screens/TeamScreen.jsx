@@ -14,6 +14,7 @@ const TeamScreen = () => {
       { name: "Curtis", gender: "male" },
       { name: "Sean", gender: "male" },
       { name: "Lily", gender: "female" },
+      { name: "ziena", gender: "female" },
       { name: "James", gender: "male" },
       { name: "Kyle", gender: "male" },
       { name: "Liz", gender: "female" },
