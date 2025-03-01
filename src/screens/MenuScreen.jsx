@@ -3,12 +3,10 @@ import './MenuScreen.css';
 import menuData from '../data/menuData.json';
 
 const MenuScreen = () => {
-  const [showFullWeek, setShowFullWeek] = useState(false);
-  
+  const [showAllDays, setShowAllDays] = useState(false);
   const weeklyMenu = menuData;
-
-  const displayedDays = showFullWeek ? weeklyMenu.days : weeklyMenu.days.slice(0, 3);
-  const isToday = (day) => day.includes("(3/01)"); // Example logic
+  const isToday = (day) => day.includes("(3/01)"); //change here the date to show the current week
+  const displayedDays = showAllDays ? weeklyMenu.days : weeklyMenu.days.filter(day => isToday(day.day));
 
   return (
     <div className="menu-screen">
@@ -36,13 +34,13 @@ const MenuScreen = () => {
         ))}
       </div>
       <button 
-        className="toggle-view-btn"
-        onClick={() => setShowFullWeek(!showFullWeek)}
+        className="toggle-view-btn" 
+        onClick={() => setShowAllDays(!showAllDays)}
       >
-        {showFullWeek ? 'Show Less' : 'View Full Week'}
+        {showAllDays ? 'Show Today Only' : 'Show All Days'}
       </button>
     </div>
   );
 };
 
-export default MenuScreen; 
+export default MenuScreen;
