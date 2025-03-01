@@ -22,14 +22,14 @@ export const StaffProvider = ({ children }) => {
   const addStaffMember = (role, name) => {
     setStaffList(prev => ({
       ...prev,
-      [role]: [...prev[role], name]
+      [`${role}Staff`]: [...prev[`${role}Staff`], { name, gender: 'unknown' }]
     }));
   };
 
   const removeStaffMember = (role, index) => {
     setStaffList(prev => ({
       ...prev,
-      [role]: prev[role].filter((_, i) => i !== index)
+      [`${role}Staff`]: prev[`${role}Staff`].filter((_, i) => i !== index)
     }));
   };
 

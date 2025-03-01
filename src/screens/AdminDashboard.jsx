@@ -162,8 +162,8 @@ const AdminDashboard = () => {
                   onChange={(e) => setPatientForm(prev => ({ ...prev, clinician: e.target.value }))}
                 >
                   <option value="">Select Clinician</option>
-                  {staffList.clinical.map((staff, index) => (
-                    <option key={index} value={staff}>{staff}</option>
+                  {staffList.clinicalStaff.map((staff, index) => (
+                    <option key={index} value={staff.name}>{staff.name}</option>
                   ))}
                 </select>
               </div>
@@ -174,8 +174,8 @@ const AdminDashboard = () => {
                   onChange={(e) => setPatientForm(prev => ({ ...prev, caseManager: e.target.value }))}
                 >
                   <option value="">Select Case Manager</option>
-                  {staffList.clinical.map((staff, index) => (
-                    <option key={index} value={staff}>{staff}</option>
+                  {staffList.clinicalStaff.map((staff, index) => (
+                    <option key={index} value={staff.name}>{staff.name}</option>
                   ))}
                 </select>
               </div>
@@ -186,8 +186,8 @@ const AdminDashboard = () => {
                   onChange={(e) => setPatientForm(prev => ({ ...prev, careCoordinator: e.target.value }))}
                 >
                   <option value="">Select Care Coordinator</option>
-                  {staffList.clinical.map((staff, index) => (
-                    <option key={index} value={staff}>{staff}</option>
+                  {staffList.clinicalStaff.map((staff, index) => (
+                    <option key={index} value={staff.name}>{staff.name}</option>
                   ))}
                 </select>
               </div>
@@ -279,11 +279,11 @@ const AdminDashboard = () => {
             <div className="staff-section">
               <h3>Clinical Staff</h3>
               <div className="staff-list">
-                {staffList.clinical.map((staff, index) => (
+                {staffList.clinicalStaff.map((staff, index) => (
                   <div key={index} className="staff-item">
                     <div className="staff-photo">
-                      {staffPhotos[staff] ? (
-                        <img src={staffPhotos[staff]} alt={staff} />
+                      {staffPhotos[staff.name] ? (
+                        <img src={staffPhotos[staff.name]} alt={staff.name} />
                       ) : (
                         <i className="fas fa-user-md"></i>
                       )}
@@ -297,7 +297,7 @@ const AdminDashboard = () => {
                         />
                       </label>
                     </div>
-                    <span>{staff}</span>
+                    <span>{staff.name}</span>
                     <button 
                       className="remove-btn"
                       onClick={() => handleRemoveStaff('clinical', index)}
@@ -312,11 +312,11 @@ const AdminDashboard = () => {
             <div className="staff-section">
               <h3>Nursing Staff</h3>
               <div className="staff-list">
-                {staffList.nursing.map((staff, index) => (
+                {staffList.nursingStaff.map((staff, index) => (
                   <div key={index} className="staff-item">
                     <div className="staff-photo">
-                      {staffPhotos[staff] ? (
-                        <img src={staffPhotos[staff]} alt={staff} />
+                      {staffPhotos[staff.name] ? (
+                        <img src={staffPhotos[staff.name]} alt={staff.name} />
                       ) : (
                         <i className="fas fa-user-md"></i>
                       )}
@@ -330,7 +330,7 @@ const AdminDashboard = () => {
                         />
                       </label>
                     </div>
-                    <span>{staff}</span>
+                    <span>{staff.name}</span>
                     <button 
                       className="remove-btn"
                       onClick={() => handleRemoveStaff('nursing', index)}
@@ -345,11 +345,11 @@ const AdminDashboard = () => {
             <div className="staff-section">
               <h3>RS Staff</h3>
               <div className="staff-list">
-                {staffList.rs.map((staff, index) => (
+                {staffList.rsStaff.map((staff, index) => (
                   <div key={index} className="staff-item">
                     <div className="staff-photo">
-                      {staffPhotos[staff] ? (
-                        <img src={staffPhotos[staff]} alt={staff} />
+                      {staffPhotos[staff.name] ? (
+                        <img src={staffPhotos[staff.name]} alt={staff.name} />
                       ) : (
                         <i className="fas fa-user-md"></i>
                       )}
@@ -363,7 +363,7 @@ const AdminDashboard = () => {
                         />
                       </label>
                     </div>
-                    <span>{staff}</span>
+                    <span>{staff.name}</span>
                     <button 
                       className="remove-btn"
                       onClick={() => handleRemoveStaff('rs', index)}
