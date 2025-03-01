@@ -4,9 +4,9 @@ const StaffContext = createContext();
 
 export const StaffProvider = ({ children }) => {
   const [staffList, setStaffList] = useState({
-    clinical: ['Dr. Sarah Adams', 'Dr. Michael Chen', 'Dr. Emily Rodriguez'],
-    nursing: ['RN Jessica Thompson', 'RN David Wilson', 'RN Maria Garcia'],
-    rs: ['John Smith', 'Laura Brown', 'Kevin White']
+    clinical: ['Stephen', 'Dev', 'James','Kyle','Liz','Seth','Curtis','Sean','Winsome','Rachael'],
+    nursing: ['Meg', 'Eleni', 'Cianna'],
+    rs: ['Arthur', 'Mackenzie', 'Chris','Justin','Kendra','Keith','Larry']
   });
 
   const addStaffMember = (role, name) => {

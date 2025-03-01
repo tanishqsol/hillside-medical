@@ -67,7 +67,7 @@ const MenuScreen = () => {
   };
 
   const displayedDays = showFullWeek ? weeklyMenu.days : weeklyMenu.days.slice(0, 3);
-  const isToday = (day) => day.includes("(2/23)"); // Example logic
+  const isToday = (day) => day.includes("(3/01)"); // Example logic
 
   return (
     <div className="menu-screen">

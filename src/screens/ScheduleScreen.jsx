@@ -34,10 +34,10 @@ const ScheduleScreen = () => {
   ];
 
   const todaySchedule = [
-    { time: "10:00 AM", activity: "Morning Meditation / Goals", staff: "AR" },
-    { time: "1:30 PM", activity: "Self-Care", staff: "LD" },
-    { time: "3:30 PM", activity: "Neuroscience of Addiction", staff: "SA" },
-    { time: "7:00 PM", activity: "Wrap-Up Group", staff: "KW" }
+    { time: "10:00 AM", activity: "Morning Meditation / Goals", staff: "CL" },
+    { time: "1:30 PM", activity: "Pottery Painting", staff: "DS" },
+    { time: "3:30 PM", activity: "Spirituality", staff: "CK" },
+    { time: "7:00 PM", activity: "Wrap-Up Group", staff: "DC" }
   ];
 
   return (
