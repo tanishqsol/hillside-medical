@@ -3,11 +3,12 @@ import './AdminDashboard.css';
 import { useStaff } from '../context/StaffContext';
 import { usePatients } from '../context/PatientContext';
 import { useATS } from '../context/ATSContext';
+import ImageCropper from '../components/ImageCropper';
 
 const AdminDashboard = () => {
   const [activeSection, setActiveSection] = useState('patients');
   const [newStaffMember, setNewStaffMember] = useState({ name: '', role: 'clinical' });
-  const { staffList, addStaffMember, removeStaffMember } = useStaff();
+  const { staffList, addStaffMember, removeStaffMember, staffPhotos, updateStaffPhoto } = useStaff();
   const { patients, updatePatient, clearPatient } = usePatients();
   const { schedule, updateScheduleItem } = useATS();
   
@@ -21,6 +22,8 @@ const AdminDashboard = () => {
   });
 
   const [editingSchedule, setEditingSchedule] = useState({});
+  const [selectedStaff, setSelectedStaff] = useState(null);
+  const [selectedImage, setSelectedImage] = useState(null);
 
   const handleAddStaff = (e) => {
     e.preventDefault();
@@ -71,6 +74,58 @@ const AdminDashboard = () => {
         return newState;
       });
     }
+  };
+
+  const handleImageSelect = (e, staff) => {
+    const file = e.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setSelectedImage(reader.result);
+        setSelectedStaff(staff);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  const getCroppedImg = (image, crop) => {
+    const canvas = document.createElement('canvas');
+    const scaleX = image.naturalWidth / image.width;
+    const scaleY = image.naturalHeight / image.height;
+    canvas.width = 100;
+    canvas.height = 100;
+    const ctx = canvas.getContext('2d');
+
+    const pixelRatio = window.devicePixelRatio;
+    canvas.width = 100 * pixelRatio;
+    canvas.height = 100 * pixelRatio;
+    ctx.setTransform(pixelRatio, 0, 0, pixelRatio, 0, 0);
+    ctx.imageSmoothingQuality = 'high';
+
+    const cropX = crop.x * scaleX;
+    const cropY = crop.y * scaleY;
+    const cropWidth = crop.width * scaleX;
+    const cropHeight = crop.height * scaleY;
+
+    ctx.drawImage(
+      image,
+      cropX,
+      cropY,
+      cropWidth,
+      cropHeight,
+      0,
+      0,
+      100,
+      100
+    );
+
+    return canvas.toDataURL('image/jpeg');
+  };
+
+  const handleCropComplete = (croppedImageUrl) => {
+    updateStaffPhoto(selectedStaff, croppedImageUrl);
+    setSelectedImage(null);
+    setSelectedStaff(null);
   };
 
   const sections = {
@@ -226,6 +281,22 @@ const AdminDashboard = () => {
               <div className="staff-list">
                 {staffList.clinical.map((staff, index) => (
                   <div key={index} className="staff-item">
+                    <div className="staff-photo">
+                      {staffPhotos[staff] ? (
+                        <img src={staffPhotos[staff]} alt={staff} />
+                      ) : (
+                        <i className="fas fa-user-md"></i>
+                      )}
+                      <label className="photo-upload-label">
+                        <i className="fas fa-camera"></i>
+                        <input
+                          type="file"
+                          accept="image/*"
+                          onChange={(e) => handleImageSelect(e, staff)}
+                          className="photo-input"
+                        />
+                      </label>
+                    </div>
                     <span>{staff}</span>
                     <button 
                       className="remove-btn"
@@ -243,6 +314,22 @@ const AdminDashboard = () => {
               <div className="staff-list">
                 {staffList.nursing.map((staff, index) => (
                   <div key={index} className="staff-item">
+                    <div className="staff-photo">
+                      {staffPhotos[staff] ? (
+                        <img src={staffPhotos[staff]} alt={staff} />
+                      ) : (
+                        <i className="fas fa-user-md"></i>
+                      )}
+                      <label className="photo-upload-label">
+                        <i className="fas fa-camera"></i>
+                        <input
+                          type="file"
+                          accept="image/*"
+                          onChange={(e) => handleImageSelect(e, staff)}
+                          className="photo-input"
+                        />
+                      </label>
+                    </div>
                     <span>{staff}</span>
                     <button 
                       className="remove-btn"
@@ -260,6 +347,22 @@ const AdminDashboard = () => {
               <div className="staff-list">
                 {staffList.rs.map((staff, index) => (
                   <div key={index} className="staff-item">
+                    <div className="staff-photo">
+                      {staffPhotos[staff] ? (
+                        <img src={staffPhotos[staff]} alt={staff} />
+                      ) : (
+                        <i className="fas fa-user-md"></i>
+                      )}
+                      <label className="photo-upload-label">
+                        <i className="fas fa-camera"></i>
+                        <input
+                          type="file"
+                          accept="image/*"
+                          onChange={(e) => handleImageSelect(e, staff)}
+                          className="photo-input"
+                        />
+                      </label>
+                    </div>
                     <span>{staff}</span>
                     <button 
                       className="remove-btn"
@@ -369,6 +472,21 @@ const AdminDashboard = () => {
           ))
         )}
       </div>
+
+      {selectedImage && (
+        <div className="crop-modal-overlay">
+          <div className="crop-modal-content">
+            <h3>Crop Photo</h3>
+            <ImageCropper
+              image={selectedImage}
+              onComplete={handleCropComplete}
+            />
+            <button onClick={() => setSelectedImage(null)} className="cancel-btn">
+              Cancel
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

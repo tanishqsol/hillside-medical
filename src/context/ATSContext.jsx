@@ -1,18 +1,12 @@
 import React, { createContext, useState, useContext } from 'react';
+import scheduleData from '../data/scheduleData.json';
 
 const ATSContext = createContext();
 
 export const ATSProvider = ({ children }) => {
-  const defaultSchedule = [
-    { id: 1, name: "Morning Meditation / Goals", time: "10:00 AM", staff: "AR" },
-    { id: 2, name: "Self-Care", time: "1:30 PM", staff: "LD" },
-    { id: 3, name: "Neuroscience of Addiction", time: "3:30 PM", staff: "SA" },
-    { id: 4, name: "Wrap-Up Group", time: "7:00 PM", staff: "KW" }
-  ];
-
   const [schedule, setSchedule] = useState(() => {
     const saved = localStorage.getItem('atsSchedule');
-    return saved ? JSON.parse(saved) : defaultSchedule;
+    return saved ? JSON.parse(saved) : scheduleData.defaultSchedule;
   });
 
   const updateScheduleItem = (id, updates) => {
@@ -28,7 +22,11 @@ export const ATSProvider = ({ children }) => {
   };
 
   return (
-    <ATSContext.Provider value={{ schedule, updateScheduleItem }}>
+    <ATSContext.Provider value={{ 
+      schedule, 
+      updateScheduleItem,
+      defaultSchedule: scheduleData.defaultSchedule 
+    }}>
       {children}
     </ATSContext.Provider>
   );

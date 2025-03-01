@@ -1,0 +1,27 @@
+{
+  "clinicalStaff": [
+    { "name": "Stephen", "gender": "male" },
+    { "name": "Curtis", "gender": "male" },
+    { "name": "Sean", "gender": "male" },
+    { "name": "Lily", "gender": "female" },
+    { "name": "ziena", "gender": "female" },
+    { "name": "James", "gender": "male" },
+    { "name": "Kyle", "gender": "male" },
+    { "name": "Liz", "gender": "female" },
+    { "name": "Seth", "gender": "male" },
+    { "name": "Dev", "gender": "male" },
+    { "name": "Rachael", "gender": "female" },
+    { "name": "Winsome", "gender": "female" }
+  ],
+  "nursingStaff": [
+    { "name": "Meg", "gender": "female" },
+    { "name": "Cianna", "gender": "female" },
+    { "name": "Eleni", "gender": "female" }
+  ],
+  "rsStaff": [
+    { "name": "Larry", "position": "RS 1", "gender": "male" },
+    { "name": "Arthur", "position": "RS 2", "gender": "male" },
+    { "name": "Keondra", "position": "RS 3", "gender": "female" },
+    { "name": "Keith", "position": "RS 4", "gender": "male" }
+  ]
+} 

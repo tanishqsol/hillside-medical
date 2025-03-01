@@ -1,13 +1,23 @@
 import React, { createContext, useState, useContext } from 'react';
+import staffData from '../data/staffData.json';
 
 const StaffContext = createContext();
 
 export const StaffProvider = ({ children }) => {
-  const [staffList, setStaffList] = useState({
-    clinical: ['Stephen', 'Dev', 'James','Kyle','Liz','Seth','Curtis','Sean','Winsome','Rachael'],
-    nursing: ['Meg', 'Eleni', 'Cianna'],
-    rs: ['Arthur', 'Mackenzie', 'Chris','Justin','Kendra','Keith','Larry']
+  const [staffList, setStaffList] = useState(staffData);
+
+  const [staffPhotos, setStaffPhotos] = useState(() => {
+    const saved = localStorage.getItem('staffPhotos');
+    return saved ? JSON.parse(saved) : {};
   });
+
+  const updateStaffPhoto = (name, photoUrl) => {
+    setStaffPhotos(prev => {
+      const updated = { ...prev, [name]: photoUrl };
+      localStorage.setItem('staffPhotos', JSON.stringify(updated));
+      return updated;
+    });
+  };
 
   const addStaffMember = (role, name) => {
     setStaffList(prev => ({
@@ -24,7 +34,13 @@ export const StaffProvider = ({ children }) => {
   };
 
   return (
-    <StaffContext.Provider value={{ staffList, addStaffMember, removeStaffMember }}>
+    <StaffContext.Provider value={{ 
+      staffList, 
+      addStaffMember, 
+      removeStaffMember,
+      staffPhotos,
+      updateStaffPhoto 
+    }}>
       {children}
     </StaffContext.Provider>
   );

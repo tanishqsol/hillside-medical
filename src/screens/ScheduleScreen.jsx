@@ -1,44 +1,19 @@
 import React, { useState } from 'react';
 import './ScheduleScreen.css';
+import scheduleData from '../data/scheduleData.json';
+import { useATS } from '../context/ATSContext';
 
 const ScheduleScreen = () => {
   const [showDailyRoutine, setShowDailyRoutine] = useState(false);
   const [showTodaySchedule, setShowTodaySchedule] = useState(false);
+  const { schedule, defaultSchedule } = useATS();
 
-  const dailyRoutine = [
-    { time: "7:00 AM", activity: "ADLs (Activities of Daily Living)" },
-    { time: "8:30 AM", activity: "Breakfast" },
-    { time: "", activity: "Fresh Air Break" },
-    { time: "10:00 AM", activity: "Morning Group" },
-    { time: "11:00 AM", activity: "Recreation Time" },
-    { time: "", activity: "Fresh Air Break" },
-    { time: "12:30 PM", activity: "Lunch" },
-    { time: "1:30 PM", activity: "Group Time" },
-    { time: "", activity: "Fresh Air Break" },
-    { time: "3:30 PM", activity: "Group Time" },
-    { time: "", activity: "Fresh Air Break" },
-    { time: "6:00 PM", activity: "Dinner" },
-    { time: "", activity: "Fresh Air Break & Self-Care" },
-    { time: "7:00 PM", activity: "Group Time" },
-    { time: "", activity: "Fresh Air Break" },
-    { time: "8:30 PM", activity: "Recreation Time / Movies" },
-    { time: "", activity: "Fresh Air Break" },
-    { time: "11:00 PM", activity: "Lights Out" }
-  ];
+  const dailyRoutine = scheduleData.dailyRoutine;
 
-  const medicationTimes = [
-    { time: "8:00 AM" },
-    { time: "12:00 PM" },
-    { time: "4:00 PM" },
-    { time: "8:00 PM" }
-  ];
+  const medicationTimes = scheduleData.medicationTimes;
 
-  const todaySchedule = [
-    { time: "10:00 AM", activity: "Morning Meditation / Goals", staff: "CL" },
-    { time: "1:30 PM", activity: "Pottery Painting", staff: "DS" },
-    { time: "3:30 PM", activity: "Spirituality", staff: "CK" },
-    { time: "7:00 PM", activity: "Wrap-Up Group", staff: "DC" }
-  ];
+  // Use schedule from context if available, otherwise use default schedule
+  const displaySchedule = schedule.length > 0 ? schedule : defaultSchedule;
 
   return (
     <div className="schedule-screen">
@@ -93,7 +68,7 @@ const ScheduleScreen = () => {
           
           <div className={`schedule-content ${showTodaySchedule ? 'show' : ''}`}>
             <div className="today-list">
-              {todaySchedule.map((item, index) => (
+              {displaySchedule.map((item, index) => (
                 <div key={index} className="today-item">
                   <span className="time">{item.time}</span>
                   <span className="activity">{item.activity}</span>

@@ -1,0 +1,98 @@
+.photo-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.8);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.photo-modal-content {
+  background: var(--card-bg);
+  padding: 30px;
+  border-radius: 15px;
+  max-width: 500px;
+  width: 90%;
+  text-align: center;
+}
+
+.photo-upload-area {
+  margin: 20px 0;
+  position: relative;
+  cursor: pointer;
+}
+
+.photo-placeholder {
+  border: 2px dashed var(--border-color);
+  border-radius: 10px;
+  padding: 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.photo-placeholder i {
+  font-size: 2rem;
+  color: var(--primary-color);
+}
+
+.photo-preview {
+  padding: 10px;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.photo-preview img {
+  max-width: 100%;
+  border-radius: 5px;
+}
+
+.photo-input {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.photo-modal-buttons {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.upload-btn, .cancel-btn {
+  padding: 10px 20px;
+  border-radius: 5px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.upload-btn {
+  background-color: var(--primary-color);
+  color: white;
+}
+
+.upload-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.cancel-btn {
+  background-color: var(--border-color);
+  color: var(--text-color);
+}
+
+.upload-btn:hover:not(:disabled),
+.cancel-btn:hover {
+  transform: translateY(-2px);
+} 

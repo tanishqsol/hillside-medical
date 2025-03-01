@@ -1,0 +1,34 @@
+{
+  "defaultSchedule": [
+    { "id": 1, "activity": "Morning Meditation / Goals", "time": "10:00 AM", "staff": "CL" },
+    { "id": 2, "activity": "Pottery Painting", "time": "1:30 PM", "staff": "DS" },
+    { "id": 3, "activity": "Spirituality", "time": "3:30 PM", "staff": "CK" },
+    { "id": 4, "activity": "Wrap-Up Group", "time": "7:00 PM", "staff": "DC" }
+  ],
+  "dailyRoutine": [
+    { "time": "7:00 AM", "activity": "ADLs (Activities of Daily Living)" },
+    { "time": "8:30 AM", "activity": "Breakfast" },
+    { "time": "", "activity": "Fresh Air Break" },
+    { "time": "10:00 AM", "activity": "Morning Group" },
+    { "time": "11:00 AM", "activity": "Recreation Time" },
+    { "time": "", "activity": "Fresh Air Break" },
+    { "time": "12:30 PM", "activity": "Lunch" },
+    { "time": "1:30 PM", "activity": "Group Time" },
+    { "time": "", "activity": "Fresh Air Break" },
+    { "time": "3:30 PM", "activity": "Group Time" },
+    { "time": "", "activity": "Fresh Air Break" },
+    { "time": "6:00 PM", "activity": "Dinner" },
+    { "time": "", "activity": "Fresh Air Break & Self-Care" },
+    { "time": "7:00 PM", "activity": "Group Time" },
+    { "time": "", "activity": "Fresh Air Break" },
+    { "time": "8:30 PM", "activity": "Recreation Time / Movies" },
+    { "time": "", "activity": "Fresh Air Break" },
+    { "time": "11:00 PM", "activity": "Lights Out" }
+  ],
+  "medicationTimes": [
+    { "time": "8:00 AM" },
+    { "time": "12:00 PM" },
+    { "time": "4:00 PM" },
+    { "time": "8:00 PM" }
+  ]
+} 

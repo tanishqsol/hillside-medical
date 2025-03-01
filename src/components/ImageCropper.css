@@ -1,0 +1,65 @@
+.image-cropper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+
+.crop-container {
+  position: relative;
+  width: 300px;
+  height: 300px;
+  overflow: hidden;
+  border-radius: 10px;
+  background: #000;
+}
+
+.crop-circle {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  border: 2px solid white;
+  box-shadow: 0 0 0 9999px rgba(0, 0, 0, 0.5);
+  pointer-events: none;
+  z-index: 2;
+}
+
+.crop-container img {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform-origin: center;
+  user-select: none;
+  max-width: none;
+}
+
+.crop-controls {
+  display: flex;
+  gap: 10px;
+}
+
+.crop-btn {
+  background-color: var(--primary-color);
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.crop-btn:hover {
+  background-color: var(--hover-color);
+}
+
+.ReactCrop {
+  max-height: 400px;
+}
+
+.ReactCrop__crop-selection {
+  border-radius: 50%;
+} 

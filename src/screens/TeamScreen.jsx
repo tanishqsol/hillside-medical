@@ -2,38 +2,19 @@ import React, { useState } from 'react';
 import './TeamScreen.css';
 import { useStaff } from '../context/StaffContext';
 import { usePatients } from '../context/PatientContext';
+import StaffPhotoModal from '../components/StaffPhotoModal';
+import staffData from '../data/staffData.json';
 
 const TeamScreen = () => {
   const [selectedMember, setSelectedMember] = useState(null);
-  const { staffList } = useStaff();
+  const [photoModalOpen, setPhotoModalOpen] = useState(false);
+  const { staffPhotos, updateStaffPhoto } = useStaff();
   const { patients } = usePatients();
 
-  const hillsideTeam = {
-    clinicalStaff: [
-      { name: "Stephen", gender: "male" },
-      { name: "Curtis", gender: "male" },
-      { name: "Sean", gender: "male" },
-      { name: "Lily", gender: "female" },
-      { name: "ziena", gender: "female" },
-      { name: "James", gender: "male" },
-      { name: "Kyle", gender: "male" },
-      { name: "Liz", gender: "female" },
-      { name: "Seth", gender: "male" },
-      { name: "Dev", gender: "male" },
-      { name: "Rachael", gender: "female" },
-      { name: "Winsome", gender: "female" }
-    ],
-    nursingStaff: [
-      { name: "Meg", gender: "female" },
-      { name: "Cianna", gender: "female" },
-      { name: "Eleni", gender: "female" }
-    ],
-    rsStaff: [
-      { name: "Larry", position: "RS 1", gender: "male" },
-      { name: "Arthur", position: "RS 2", gender: "male" },
-      { name: "Keondra", position: "RS 3", gender: "female" },
-      { name: "Keith", position: "RS 4", gender: "male" }
-    ]
+  const hillsideTeam = staffData;
+
+  const handlePhotoUpload = (staffMember, photoUrl) => {
+    updateStaffPhoto(staffMember, photoUrl);
   };
 
   return (
@@ -45,16 +26,16 @@ const TeamScreen = () => {
           <div className="staff-section">
             <h3>Clinical Staff</h3>
             <div className="staff-list">
-              {staffList.clinical.map((staff, index) => (
+              {hillsideTeam.clinicalStaff.map((staff, index) => (
                 <div 
                   key={index} 
                   className="staff-member"
-                  onClick={() => setSelectedMember(staff)}
+                  onClick={() => setSelectedMember(staff.name)}
                 >
                   <div className="staff-avatar">
                     <i className="fas fa-user-md"></i>
                   </div>
-                  <span className="staff-name">{staff}</span>
+                  <span className="staff-name">{staff.name}</span>
                 </div>
               ))}
             </div>
@@ -62,16 +43,16 @@ const TeamScreen = () => {
           <div className="staff-section">
             <h3>Nursing Staff</h3>
             <div className="staff-list">
-              {staffList.nursing.map((staff, index) => (
+              {hillsideTeam.nursingStaff.map((staff, index) => (
                 <div 
                   key={index} 
                   className="staff-member"
-                  onClick={() => setSelectedMember(staff)}
+                  onClick={() => setSelectedMember(staff.name)}
                 >
                   <div className="staff-avatar">
                     <i className="fas fa-user-nurse"></i>
                   </div>
-                  <span className="staff-name">{staff}</span>
+                  <span className="staff-name">{staff.name}</span>
                 </div>
               ))}
             </div>
@@ -79,18 +60,16 @@ const TeamScreen = () => {
           <div className="staff-section">
             <h3>RS Staff on Duty</h3>
             <div className="staff-list">
-              {staffList.rs.map((staff, index) => (
+              {hillsideTeam.rsStaff.map((staff, index) => (
                 <div 
                   key={index} 
                   className="staff-member"
-                  onClick={() => setSelectedMember(staff)}
+                  onClick={() => setSelectedMember(staff.name)}
                 >
                   <div className="staff-avatar">
                     <i className="fas fa-user"></i>
                   </div>
-                  <span className="staff-name">
-                    {staff}
-                  </span>
+                  <span className="staff-name">{staff.name}</span>
                 </div>
               ))}
             </div>
@@ -138,9 +117,19 @@ const TeamScreen = () => {
               ×
             </button>
             <div className="modal-avatar">
-              <i className={`fas fa-${selectedMember.gender}`}></i>
+              {staffPhotos[selectedMember] ? (
+                <img src={staffPhotos[selectedMember]} alt={selectedMember} />
+              ) : (
+                <i className={`fas fa-${selectedMember.gender}`}></i>
+              )}
             </div>
             <h2>{selectedMember}</h2>
+            <button 
+              className="upload-photo-btn"
+              onClick={() => setPhotoModalOpen(true)}
+            >
+              <i className="fas fa-camera"></i> Upload Photo
+            </button>
             <p className="modal-role">
               {selectedMember.position ? 
                 `Role: ${selectedMember.position}` : 
@@ -153,6 +142,13 @@ const TeamScreen = () => {
           </div>
         </div>
       )}
+
+      <StaffPhotoModal
+        isOpen={photoModalOpen}
+        onClose={() => setPhotoModalOpen(false)}
+        staffMember={selectedMember}
+        onUpload={handlePhotoUpload}
+      />
     </div>
   );
 };
