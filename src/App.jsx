@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { HashRouter as Router, Routes, Route, Link, useLocation } from 'react-router-dom';
+import { HashRouter, Routes, Route, Link, useLocation } from 'react-router-dom';
 import './App.css';
 import logo from './assets/logo.svg';
 import TeamScreen from './screens/TeamScreen';
@@ -236,7 +236,7 @@ function App() {
     <StaffProvider>
       <PatientProvider>
         <ATSProvider>
-          <Router>
+          <HashRouter>
             <div className="app">
               <nav className="navbar">
                 <NavbarContent 
@@ -266,7 +266,7 @@ function App() {
                 </Routes>
               </main>
             </div>
-          </Router>
+          </HashRouter>
         </ATSProvider>
       </PatientProvider>
     </StaffProvider>
